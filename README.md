@@ -27,14 +27,30 @@ Release 頁面提供原始碼壓縮檔、SHA-256 checksum 與驗證摘要。日�
 - Git
 - macOS 或 Linux 的 Bash 環境
 
-先把下載後的 `ai-dev-lab` 放到獨立、可丟棄的工作目錄，再建立
-baseline commit。後續會修改 runtime store、Evidence 與 loop state，
-請保留原始壓縮檔不動。
+最省步驟的方式是直接 clone 固定 tag：
 
 ```bash
+git clone --branch book-v1.0.0 --depth 1 \
+  https://github.com/ci-yang/ai-dev-lab.git
+cd ai-dev-lab
 scripts/bootstrap.sh
 scripts/verify.sh full
 ```
+
+若從 Release 下載 `ai-dev-lab-book-v1.0.0.zip`，解壓後先在該副本建立
+Git baseline，再執行 bootstrap 與 verifier：
+
+```bash
+cd ai-dev-lab-book-v1.0.0
+git init -b main
+git add .
+git commit -m "chore: create lab baseline"
+scripts/bootstrap.sh
+scripts/verify.sh full
+```
+
+若 Git identity 尚未設定，先依 Git 顯示的指引設定再 commit。後續練習
+會修改 runtime store、Evidence 與 loop state，請保留原始壓縮檔不動。
 
 `bootstrap.sh` 預設使用 `constraints/runtime-profile.txt` 的 exact
 pins 建立 Python 3.12+ 環境並安裝開發依賴。這是 version-locked
