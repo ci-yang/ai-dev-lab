@@ -1,0 +1,107 @@
+{
+  "delegation": {
+    "id": "TB-VALIDATION",
+    "objective": "Validate task-board behavior against SPEC-TB-001",
+    "non_goals": [
+      "change the specification",
+      "modify implementation",
+      "merge, push, deploy, or contact external systems"
+    ],
+    "scope": {
+      "readable_paths": [
+        "AGENTS.md",
+        "specs/task-board.md",
+        "tasks/task-contract.md",
+        "policies/agent-authority.yaml",
+        "src/task_board/",
+        "tests/",
+        "evidence/"
+      ],
+      "writable_paths": [],
+      "writable_paths_semantics": "tracked or durable artifacts; empty means deny",
+      "tracked_artifact_writes": "deny",
+      "verifier_ephemeral_writes": {
+        "owner": "scripts/verify.sh",
+        "paths": [
+          "runtime/pycache/",
+          "__pycache__/",
+          "*.py[cod]",
+          ".pytest_cache/",
+          ".ruff_cache/",
+          ".coverage",
+          "htmlcov/"
+        ]
+      },
+      "allowed_tools": [
+        "scripts/verify.sh",
+        "git diff"
+      ],
+      "prohibited_actions": [
+        "network",
+        "credential access",
+        "modify tracked artifact",
+        "write durable evidence",
+        "merge",
+        "push",
+        "deploy",
+        "external communication"
+      ]
+    },
+    "inputs": {
+      "trusted_instructions": [
+        "human-approved task contract",
+        "SPEC-TB-001",
+        "repository policy"
+      ],
+      "untrusted_data": [
+        "task titles",
+        "JSON store content",
+        "command output"
+      ]
+    },
+    "deliverables": {
+      "artifacts": [
+        "verification result",
+        "acceptance mapping",
+        "known gaps",
+        "decision"
+      ],
+      "schema": "evidence/examples/not-run-manifest.json"
+    },
+    "verification": {
+      "executable_checks": [
+        "scripts/verify.sh fast",
+        "scripts/verify.sh full"
+      ],
+      "independent_verification": "deterministic",
+      "evidence_refs_required": true
+    },
+    "budget": {
+      "max_time_minutes": 20,
+      "max_cost": "no paid service",
+      "max_workers": 1,
+      "max_retries": 1
+    },
+    "termination": {
+      "success": [
+        "all required checks pass and Evidence is complete"
+      ],
+      "fail": [
+        "an acceptance check fails"
+      ],
+      "escalate": [
+        "spec conflict",
+        "missing verifier",
+        "product or risk decision needed"
+      ]
+    },
+    "responsibility": {
+      "human_owner": "lab-operator",
+      "approval_required_for": [
+        "scope change",
+        "network beyond bootstrap",
+        "external side effect"
+      ]
+    }
+  }
+}

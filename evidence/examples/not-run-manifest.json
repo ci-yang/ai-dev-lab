@@ -1,0 +1,14 @@
+{
+  "artifact_type": "schema-example",
+  "environment": "unverified",
+  "known_gaps": [
+    "No command was run for this example",
+    "No commit or tool version is claimed"
+  ],
+  "repo_commit": null,
+  "run_id": "EXAMPLE-NOT-RUN",
+  "verification": {
+    "exit_code": null,
+    "status": "unknown"
+  }
+}

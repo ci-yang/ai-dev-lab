@@ -1,0 +1,128 @@
+{
+  "snapshot": "v1.0.0",
+  "environment": "pedagogical-local-only",
+  "roles": {
+    "maker": {
+      "readable_paths": [
+        ".ai-loop/",
+        ".gitignore",
+        "AGENTS.md",
+        "LICENSE",
+        "README.md",
+        "constraints/",
+        "tasks/",
+        "context/",
+        "pyproject.toml",
+        "specs/",
+        "policies/",
+        "scripts/",
+        "src/",
+        "tests/",
+        "evidence/"
+      ],
+      "writable_paths": [
+        "src/",
+        "tests/",
+        "evidence/"
+      ],
+      "verifier_ephemeral_writes": {
+        "owner": "scripts/verify.sh",
+        "paths": [
+          "runtime/pycache/",
+          "__pycache__/",
+          "*.py[cod]",
+          ".pytest_cache/",
+          ".ruff_cache/",
+          ".coverage",
+          "htmlcov/"
+        ],
+        "conditions": [
+          "path is gitignored",
+          "content is disposable verifier output",
+          "no source, spec, policy, task, or evidence mutation"
+        ]
+      },
+      "allowed_commands": [
+        "scripts/guard-command.sh task-board",
+        "scripts/verify.sh fast",
+        "scripts/verify.sh full",
+        "scripts/guard-command.sh loop",
+        "scripts/guard-command.sh git-status"
+      ],
+      "network": "deny except human-run bootstrap",
+      "credential": "none",
+      "prohibited_actions": [
+        "merge",
+        "push",
+        "deploy",
+        "delete external data",
+        "external communication"
+      ]
+    },
+    "checker": {
+      "readable_paths": [
+        ".ai-loop/",
+        ".gitignore",
+        "AGENTS.md",
+        "LICENSE",
+        "README.md",
+        "constraints/",
+        "tasks/",
+        "context/",
+        "pyproject.toml",
+        "specs/",
+        "policies/",
+        "scripts/",
+        "src/",
+        "tests/",
+        "evidence/"
+      ],
+      "writable_paths": [],
+      "writable_paths_semantics": "tracked or durable artifacts; empty means deny",
+      "tracked_artifact_writes": "deny",
+      "verifier_ephemeral_writes": {
+        "owner": "scripts/verify.sh",
+        "paths": [
+          "runtime/pycache/",
+          "__pycache__/",
+          "*.py[cod]",
+          ".pytest_cache/",
+          ".ruff_cache/",
+          ".coverage",
+          "htmlcov/"
+        ],
+        "conditions": [
+          "path is gitignored",
+          "content is disposable verifier output",
+          "no source, spec, policy, task, or evidence mutation"
+        ]
+      },
+      "allowed_commands": [
+        "scripts/verify.sh fast",
+        "scripts/verify.sh full",
+        "git diff"
+      ],
+      "network": "deny",
+      "credential": "none",
+      "prohibited_actions": [
+        "modify implementation",
+        "modify tracked artifact",
+        "write durable evidence",
+        "merge",
+        "push",
+        "deploy",
+        "external communication"
+      ]
+    }
+  },
+  "approval": {
+    "human_owner": "lab-operator",
+    "required_for": [
+      "scope change",
+      "spec change",
+      "network beyond bootstrap",
+      "external side effect"
+    ],
+    "expiry": "one task"
+  }
+}

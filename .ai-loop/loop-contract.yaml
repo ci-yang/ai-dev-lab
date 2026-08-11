@@ -1,0 +1,75 @@
+{
+  "loop": {
+    "mission_id": "task-board-verification",
+    "objective": "Run the canonical verifier and preserve a bounded decision trail",
+    "non_goals": [
+      "modify the specification",
+      "auto-fix failures",
+      "merge, push, deploy, or contact external systems"
+    ],
+    "allowed_tasks": [
+      "TB-LAB-VERIFY"
+    ],
+    "trigger": {
+      "type": "human-command",
+      "conditions": [
+        "clean isolated lab",
+        "contract and state parse",
+        "no secret or production data"
+      ]
+    },
+    "authority": {
+      "readable_paths": [
+        "src/",
+        "tests/",
+        "scripts/",
+        "tasks/",
+        "specs/",
+        "policies/"
+      ],
+      "writable_paths": [
+        ".ai-loop/state.yaml",
+        ".ai-loop/events.jsonl",
+        "evidence/loop-runs/"
+      ],
+      "allowed_tools": [
+        "scripts/verify.sh"
+      ],
+      "prohibited_actions": [
+        "network",
+        "credential access",
+        "source edit",
+        "merge",
+        "push",
+        "deploy",
+        "external communication"
+      ]
+    },
+    "verification": {
+      "mode": "fast",
+      "agent_cannot_modify": [
+        "specs/",
+        "tests/",
+        "policies/",
+        ".ai-loop/loop-contract.yaml"
+      ]
+    },
+    "max_rounds": 3,
+    "same_failure_limit": 2,
+    "persistence": {
+      "snapshot": ".ai-loop/state.yaml",
+      "events": ".ai-loop/events.jsonl",
+      "evidence": "evidence/loop-runs/"
+    },
+    "terminal_states": [
+      "done",
+      "blocked",
+      "escalated",
+      "aborted"
+    ],
+    "responsibility": {
+      "human_owner": "lab-operator",
+      "incident_owner": "lab-operator"
+    }
+  }
+}
