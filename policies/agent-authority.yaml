@@ -5,6 +5,7 @@
     "maker": {
       "readable_paths": [
         ".ai-loop/",
+        ".github/",
         ".gitignore",
         "AGENTS.md",
         "LICENSE",
@@ -62,6 +63,7 @@
     "checker": {
       "readable_paths": [
         ".ai-loop/",
+        ".github/",
         ".gitignore",
         "AGENTS.md",
         "LICENSE",

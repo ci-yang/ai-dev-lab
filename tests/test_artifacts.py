@@ -181,7 +181,8 @@ def test_readme_discloses_pedagogical_boundary() -> None:
     assert "production" in readme
     assert "47 passed" in readme
     assert "83.18%" in readme
-    assert "Linux 與 Windows" in readme
+    assert "GitHub Actions" in readme
+    assert "Windows PowerShell" in readme
 
 
 def test_task_and_spec_acceptance_use_distinct_namespaces() -> None:
