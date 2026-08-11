@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ai-dev-lab-task-board"
-version = "0.1.0"
+version = "1.0.0"
 description = "A local-only teaching CLI for verifiable AI-driven development."
 readme = "README.md"
 requires-python = ">=3.12"

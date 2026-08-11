@@ -2,13 +2,14 @@ import json
 import re
 import subprocess
 import sys
+import tomllib
 from pathlib import Path
 from typing import Any, Dict
 
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-BOOK_PROFILE = {
+RUNTIME_PROFILE = {
     "black": "26.5.1",
     "click": "8.4.2",
     "coverage": "7.15.2",
@@ -176,6 +177,10 @@ def test_lab_contains_no_private_path_or_key_shaped_value() -> None:
 
 def test_readme_discloses_pedagogical_boundary() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+    package_init = (ROOT / "src" / "task_board" / "__init__.py").read_text(
+        encoding="utf-8"
+    )
 
     assert "不是" in readme
     assert "production" in readme
@@ -183,6 +188,9 @@ def test_readme_discloses_pedagogical_boundary() -> None:
     assert "83.18%" in readme
     assert "GitHub Actions" in readme
     assert "Windows PowerShell" in readme
+    assert project["project"]["version"] == "1.0.0"
+    assert '__version__ = "1.0.0"' in package_init
+    assert "releases/tag/v1.0.0" in readme
 
 
 def test_task_and_spec_acceptance_use_distinct_namespaces() -> None:
@@ -213,7 +221,7 @@ def test_runtime_profile_is_exact_and_bootstrap_uses_it_for_both_paths() -> None
     project = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
     verifier = (ROOT / "scripts" / "verify.sh").read_text(encoding="utf-8")
 
-    assert pins == BOOK_PROFILE
+    assert pins == RUNTIME_PROFILE
     assert "version-locked teaching profile" in profile_path.read_text(encoding="utf-8")
     assert "not a hash-locked software supply-chain guarantee" in (
         profile_path.read_text(encoding="utf-8")
@@ -290,7 +298,7 @@ def test_evidence_manifest_records_reproducibility_identity(
     assert re.fullmatch(r"[0-9a-f]{64}", profile["sha256"])
     assert {
         name: details["expected"] for name, details in manifest["tools"].items()
-    } == BOOK_PROFILE
+    } == RUNTIME_PROFILE
     assert manifest["verification"] == {"exit_code": 0, "status": "pass"}
 
 

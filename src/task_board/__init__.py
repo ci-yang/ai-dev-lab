@@ -3,4 +3,4 @@
 from task_board.domain import Task
 
 __all__ = ["Task"]
-__version__ = "0.1.0"
+__version__ = "1.0.0"

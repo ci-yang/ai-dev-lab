@@ -14,10 +14,10 @@ Task Board runtime 沒有 network client、帳號、credential、客戶資料、
 
 建議從 GitHub Release 下載與教學內容對應的固定版本：
 
-<https://github.com/ci-yang/ai-dev-lab/releases/tag/book-v1.0.0>
+<https://github.com/ci-yang/ai-dev-lab/releases/tag/v1.0.0>
 
 Release 頁面提供原始碼壓縮檔、SHA-256 checksum 與驗證摘要。日後
-`main` 可繼續更新，但 `book-v1.0.0` tag 不會跟著移動。
+`main` 可繼續更新，但 `v1.0.0` tag 不會跟著移動。
 
 ## 快速開始
 
@@ -30,18 +30,18 @@ Release 頁面提供原始碼壓縮檔、SHA-256 checksum 與驗證摘要。日�
 最省步驟的方式是直接 clone 固定 tag：
 
 ```bash
-git clone --branch book-v1.0.0 --depth 1 \
+git clone --branch v1.0.0 --depth 1 \
   https://github.com/ci-yang/ai-dev-lab.git
 cd ai-dev-lab
 scripts/bootstrap.sh
 scripts/verify.sh full
 ```
 
-若從 Release 下載 `ai-dev-lab-book-v1.0.0.zip`，解壓後先在該副本建立
+若從 Release 下載 `ai-dev-lab-v1.0.0.zip`，解壓後先在該副本建立
 Git baseline，再執行 bootstrap 與 verifier：
 
 ```bash
-cd ai-dev-lab-book-v1.0.0
+cd ai-dev-lab-v1.0.0
 git init -b main
 git add .
 git commit -m "chore: create lab baseline"
